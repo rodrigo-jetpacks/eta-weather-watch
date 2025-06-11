@@ -1,0 +1,159 @@
+
+import React from 'react';
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table';
+import { Badge } from '@/components/ui/badge';
+import { Button } from '@/components/ui/button';
+import { Package, Truck, Calendar, ArrowUp } from 'lucide-react';
+import { BTSShipment, WeatherEvent } from '@/types/weather';
+import { format, parseISO } from 'date-fns';
+
+interface ShipmentTableProps {
+  shipments: BTSShipment[];
+  weatherEvents: WeatherEvent[];
+  onUpdateETA: (shipmentId: string, newETA: string) => void;
+}
+
+const ShipmentTable: React.FC<ShipmentTableProps> = ({ shipments, weatherEvents, onUpdateETA }) => {
+  const getStatusColor = (status: string) => {
+    switch (status) {
+      case 'delivered': return 'bg-green-100 text-green-800';
+      case 'in_transit': return 'bg-blue-100 text-blue-800';
+      case 'delayed': return 'bg-red-100 text-red-800';
+      case 'processing': return 'bg-yellow-100 text-yellow-800';
+      default: return 'bg-gray-100 text-gray-800';
+    }
+  };
+
+  const getStatusIcon = (status: string) => {
+    switch (status) {
+      case 'delivered': return '✅';
+      case 'in_transit': return '🚛';
+      case 'delayed': return '⚠️';
+      case 'processing': return '📦';
+      default: return '❓';
+    }
+  };
+
+  const isAffectedByWeather = (shipmentId: string) => {
+    return weatherEvents.some(event => event.shipmentId === shipmentId);
+  };
+
+  const getWeatherImpact = (shipmentId: string) => {
+    const event = weatherEvents.find(event => event.shipmentId === shipmentId);
+    return event ? event.delayHours : 0;
+  };
+
+  const handleETAUpdate = (shipmentId: string, originalETA: string, delayHours: number) => {
+    const originalDate = parseISO(originalETA);
+    const newDate = new Date(originalDate.getTime() + delayHours * 60 * 60 * 1000);
+    onUpdateETA(shipmentId, newDate.toISOString());
+  };
+
+  return (
+    <Card className="w-full">
+      <CardHeader className="bg-gradient-to-r from-slate-50 to-slate-100 border-b">
+        <CardTitle className="flex items-center gap-2 text-slate-900">
+          <Package className="h-5 w-5" />
+          BTS Shipment Records
+        </CardTitle>
+      </CardHeader>
+      <CardContent className="p-0">
+        <div className="overflow-x-auto">
+          <Table>
+            <TableHeader>
+              <TableRow className="bg-slate-50">
+                <TableHead className="font-semibold">Tracking Number</TableHead>
+                <TableHead className="font-semibold">Customer</TableHead>
+                <TableHead className="font-semibold">Route</TableHead>
+                <TableHead className="font-semibold">Metro Code</TableHead>
+                <TableHead className="font-semibold">Status</TableHead>
+                <TableHead className="font-semibold">Original ETA</TableHead>
+                <TableHead className="font-semibold">Adjusted ETA</TableHead>
+                <TableHead className="font-semibold">Weather Impact</TableHead>
+                <TableHead className="font-semibold text-center">Actions</TableHead>
+              </TableRow>
+            </TableHeader>
+            <TableBody>
+              {shipments.map((shipment) => {
+                const weatherAffected = isAffectedByWeather(shipment.id);
+                const delayHours = getWeatherImpact(shipment.id);
+                
+                return (
+                  <TableRow 
+                    key={shipment.id} 
+                    className={weatherAffected ? 'bg-amber-50 border-l-4 border-l-amber-400' : 'hover:bg-gray-50'}
+                  >
+                    <TableCell className="font-mono font-medium text-blue-600">
+                      {shipment.trackingNumber}
+                    </TableCell>
+                    <TableCell className="font-medium">{shipment.customerName}</TableCell>
+                    <TableCell>
+                      <div className="text-sm">
+                        <div className="font-medium">{shipment.origin}</div>
+                        <div className="text-gray-500 flex items-center gap-1">
+                          <ArrowUp className="h-3 w-3 rotate-45" />
+                          {shipment.destination}
+                        </div>
+                      </div>
+                    </TableCell>
+                    <TableCell>
+                      <Badge variant="outline" className="font-mono">
+                        {shipment.destinationMetroCode}
+                      </Badge>
+                    </TableCell>
+                    <TableCell>
+                      <Badge className={getStatusColor(shipment.status)}>
+                        {getStatusIcon(shipment.status)} {shipment.status.replace('_', ' ')}
+                      </Badge>
+                    </TableCell>
+                    <TableCell>
+                      <div className="flex items-center gap-1 text-sm">
+                        <Calendar className="h-4 w-4 text-gray-400" />
+                        {format(parseISO(shipment.originalETA), 'MMM dd, yyyy HH:mm')}
+                      </div>
+                    </TableCell>
+                    <TableCell>
+                      {shipment.adjustedETA ? (
+                        <div className="flex items-center gap-1 text-sm text-red-600 font-medium">
+                          <Calendar className="h-4 w-4" />
+                          {format(parseISO(shipment.adjustedETA), 'MMM dd, yyyy HH:mm')}
+                        </div>
+                      ) : (
+                        <span className="text-gray-400">-</span>
+                      )}
+                    </TableCell>
+                    <TableCell>
+                      {weatherAffected ? (
+                        <Badge className="bg-amber-100 text-amber-800">
+                          +{delayHours}h delay
+                        </Badge>
+                      ) : (
+                        <span className="text-gray-400">None</span>
+                      )}
+                    </TableCell>
+                    <TableCell className="text-center">
+                      {weatherAffected && !shipment.adjustedETA && shipment.status !== 'delivered' && (
+                        <Button
+                          size="sm"
+                          variant="outline"
+                          onClick={() => handleETAUpdate(shipment.id, shipment.originalETA, delayHours)}
+                          className="text-blue-600 border-blue-600 hover:bg-blue-50"
+                        >
+                          <Truck className="h-3 w-3 mr-1" />
+                          Update ETA
+                        </Button>
+                      )}
+                    </TableCell>
+                  </TableRow>
+                );
+              })}
+            </TableBody>
+          </Table>
+        </div>
+      </CardContent>
+    </Card>
+  );
+};
+
+export default ShipmentTable;
