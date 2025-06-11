@@ -17,11 +17,11 @@ interface ShipmentTableProps {
 const ShipmentTable: React.FC<ShipmentTableProps> = ({ shipments, weatherEvents, onUpdateETA }) => {
   const getStatusColor = (status: string) => {
     switch (status) {
-      case 'delivered': return 'bg-green-100 text-green-800';
-      case 'in_transit': return 'bg-blue-100 text-blue-800';
-      case 'delayed': return 'bg-red-100 text-red-800';
-      case 'processing': return 'bg-yellow-100 text-yellow-800';
-      default: return 'bg-gray-100 text-gray-800';
+      case 'delivered': return 'bg-accent/20 text-accent-foreground';
+      case 'in_transit': return 'bg-primary/20 text-primary';
+      case 'delayed': return 'bg-destructive/20 text-destructive';
+      case 'processing': return 'bg-secondary text-secondary-foreground';
+      default: return 'bg-muted text-muted-foreground';
     }
   };
 
@@ -52,8 +52,8 @@ const ShipmentTable: React.FC<ShipmentTableProps> = ({ shipments, weatherEvents,
 
   return (
     <Card className="w-full">
-      <CardHeader className="bg-gradient-to-r from-slate-50 to-slate-100 border-b">
-        <CardTitle className="flex items-center gap-2 text-slate-900">
+      <CardHeader className="bg-gradient-to-r from-secondary to-muted border-b">
+        <CardTitle className="flex items-center gap-2 text-foreground">
           <Package className="h-5 w-5" />
           BTS Shipment Records
         </CardTitle>
@@ -62,7 +62,7 @@ const ShipmentTable: React.FC<ShipmentTableProps> = ({ shipments, weatherEvents,
         <div className="overflow-x-auto">
           <Table>
             <TableHeader>
-              <TableRow className="bg-slate-50">
+              <TableRow className="bg-muted">
                 <TableHead className="font-semibold">Tracking Number</TableHead>
                 <TableHead className="font-semibold">Customer</TableHead>
                 <TableHead className="font-semibold">Route</TableHead>
@@ -82,16 +82,16 @@ const ShipmentTable: React.FC<ShipmentTableProps> = ({ shipments, weatherEvents,
                 return (
                   <TableRow 
                     key={shipment.id} 
-                    className={weatherAffected ? 'bg-amber-50 border-l-4 border-l-amber-400' : 'hover:bg-gray-50'}
+                    className={weatherAffected ? 'bg-primary/5 border-l-4 border-l-primary' : 'hover:bg-muted/50'}
                   >
-                    <TableCell className="font-mono font-medium text-blue-600">
+                    <TableCell className="font-mono font-medium text-primary">
                       {shipment.trackingNumber}
                     </TableCell>
                     <TableCell className="font-medium">{shipment.customerName}</TableCell>
                     <TableCell>
                       <div className="text-sm">
                         <div className="font-medium">{shipment.origin}</div>
-                        <div className="text-gray-500 flex items-center gap-1">
+                        <div className="text-muted-foreground flex items-center gap-1">
                           <ArrowUp className="h-3 w-3 rotate-45" />
                           {shipment.destination}
                         </div>
@@ -109,27 +109,27 @@ const ShipmentTable: React.FC<ShipmentTableProps> = ({ shipments, weatherEvents,
                     </TableCell>
                     <TableCell>
                       <div className="flex items-center gap-1 text-sm">
-                        <Calendar className="h-4 w-4 text-gray-400" />
+                        <Calendar className="h-4 w-4 text-muted-foreground" />
                         {format(parseISO(shipment.originalETA), 'MMM dd, yyyy HH:mm')}
                       </div>
                     </TableCell>
                     <TableCell>
                       {shipment.adjustedETA ? (
-                        <div className="flex items-center gap-1 text-sm text-red-600 font-medium">
+                        <div className="flex items-center gap-1 text-sm text-destructive font-medium">
                           <Calendar className="h-4 w-4" />
                           {format(parseISO(shipment.adjustedETA), 'MMM dd, yyyy HH:mm')}
                         </div>
                       ) : (
-                        <span className="text-gray-400">-</span>
+                        <span className="text-muted-foreground">-</span>
                       )}
                     </TableCell>
                     <TableCell>
                       {weatherAffected ? (
-                        <Badge className="bg-amber-100 text-amber-800">
+                        <Badge className="bg-primary/20 text-primary">
                           +{delayHours}h delay
                         </Badge>
                       ) : (
-                        <span className="text-gray-400">None</span>
+                        <span className="text-muted-foreground">None</span>
                       )}
                     </TableCell>
                     <TableCell className="text-center">
@@ -138,7 +138,7 @@ const ShipmentTable: React.FC<ShipmentTableProps> = ({ shipments, weatherEvents,
                           size="sm"
                           variant="outline"
                           onClick={() => handleETAUpdate(shipment.id, shipment.originalETA, delayHours)}
-                          className="text-blue-600 border-blue-600 hover:bg-blue-50"
+                          className="text-primary border-primary hover:bg-primary/10"
                         >
                           <Truck className="h-3 w-3 mr-1" />
                           Update ETA

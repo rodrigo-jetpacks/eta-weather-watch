@@ -36,11 +36,11 @@ const WeatherAlertsList: React.FC<WeatherAlertsListProps> = ({ alerts, onToggleA
 
   const getSeverityColor = (severity: string) => {
     switch (severity) {
-      case 'low': return 'bg-green-100 text-green-800 border-green-200';
-      case 'medium': return 'bg-yellow-100 text-yellow-800 border-yellow-200';
-      case 'high': return 'bg-orange-100 text-orange-800 border-orange-200';
-      case 'critical': return 'bg-red-100 text-red-800 border-red-200';
-      default: return 'bg-gray-100 text-gray-800 border-gray-200';
+      case 'low': return 'bg-accent/20 text-accent-foreground border-accent/30';
+      case 'medium': return 'bg-secondary text-secondary-foreground border-border';
+      case 'high': return 'bg-primary/20 text-primary border-primary/30';
+      case 'critical': return 'bg-destructive/20 text-destructive border-destructive/30';
+      default: return 'bg-muted text-muted-foreground border-border';
     }
   };
 
@@ -54,7 +54,7 @@ const WeatherAlertsList: React.FC<WeatherAlertsListProps> = ({ alerts, onToggleA
           </CardTitle>
         </CardHeader>
         <CardContent>
-          <div className="text-center py-8 text-gray-500">
+          <div className="text-center py-8 text-muted-foreground">
             <CloudRain className="h-12 w-12 mx-auto mb-4 opacity-50" />
             <p>No active weather alerts</p>
             <p className="text-sm">Create a weather alert to track affected shipments</p>
@@ -66,23 +66,23 @@ const WeatherAlertsList: React.FC<WeatherAlertsListProps> = ({ alerts, onToggleA
 
   return (
     <Card className="w-full">
-      <CardHeader className="bg-gradient-to-r from-amber-50 to-orange-50 border-b">
-        <CardTitle className="flex items-center gap-2 text-amber-900">
+      <CardHeader className="bg-gradient-to-r from-primary/5 to-accent/5 border-b">
+        <CardTitle className="flex items-center gap-2 text-primary">
           <CloudRain className="h-5 w-5" />
           Active Weather Alerts ({alerts.length})
         </CardTitle>
       </CardHeader>
       <CardContent className="p-0">
-        <div className="divide-y">
+        <div className="divide-y divide-border">
           {alerts.map((alert) => (
-            <div key={alert.id} className="p-4 hover:bg-gray-50 transition-colors">
+            <div key={alert.id} className="p-4 hover:bg-muted/50 transition-colors">
               <div className="flex items-start justify-between">
                 <div className="flex-1">
                   <div className="flex items-center gap-3 mb-2">
                     <div className="flex items-center gap-2">
                       {getWeatherIcon(alert.weatherType)}
                       <span className="text-lg">{getWeatherEmoji(alert.weatherType)}</span>
-                      <span className="font-semibold text-gray-900 capitalize">
+                      <span className="font-semibold text-foreground capitalize">
                         {alert.weatherType.replace('_', ' ')}
                       </span>
                     </div>
@@ -94,7 +94,7 @@ const WeatherAlertsList: React.FC<WeatherAlertsListProps> = ({ alerts, onToggleA
                     </Badge>
                   </div>
                   
-                  <div className="flex items-center gap-4 text-sm text-gray-600 mb-2">
+                  <div className="flex items-center gap-4 text-sm text-muted-foreground mb-2">
                     <div className="flex items-center gap-1">
                       <MapPin className="h-4 w-4" />
                       <span className="font-mono font-medium">{alert.metroCode}</span>
@@ -106,10 +106,10 @@ const WeatherAlertsList: React.FC<WeatherAlertsListProps> = ({ alerts, onToggleA
                   </div>
                   
                   {alert.description && (
-                    <p className="text-gray-700 text-sm">{alert.description}</p>
+                    <p className="text-foreground text-sm">{alert.description}</p>
                   )}
                   
-                  <div className="text-xs text-gray-500 mt-2">
+                  <div className="text-xs text-muted-foreground mt-2">
                     Created: {format(parseISO(alert.createdAt), 'MMM dd, yyyy HH:mm')}
                   </div>
                 </div>
