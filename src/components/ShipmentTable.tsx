@@ -1,12 +1,12 @@
-
 import React from 'react';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
-import { Package, Truck, Calendar, ArrowUp } from 'lucide-react';
+import { Package, Truck, Calendar, ArrowUp, ExternalLink } from 'lucide-react';
 import { BTSShipment, WeatherEvent } from '@/types/weather';
 import { format, parseISO } from 'date-fns';
+import { Link } from 'react-router-dom';
 
 interface ShipmentTableProps {
   shipments: BTSShipment[];
@@ -85,7 +85,13 @@ const ShipmentTable: React.FC<ShipmentTableProps> = ({ shipments, weatherEvents,
                     className={weatherAffected ? 'bg-primary/5 border-l-4 border-l-primary' : 'hover:bg-muted/50'}
                   >
                     <TableCell className="font-mono font-medium text-primary">
-                      {shipment.trackingNumber}
+                      <Link 
+                        to={`/track/${shipment.trackingNumber}`}
+                        className="hover:underline flex items-center gap-1"
+                      >
+                        {shipment.trackingNumber}
+                        <ExternalLink className="h-3 w-3" />
+                      </Link>
                     </TableCell>
                     <TableCell className="font-medium">{shipment.customerName}</TableCell>
                     <TableCell>
@@ -133,17 +139,29 @@ const ShipmentTable: React.FC<ShipmentTableProps> = ({ shipments, weatherEvents,
                       )}
                     </TableCell>
                     <TableCell className="text-center">
-                      {weatherAffected && !shipment.adjustedETA && shipment.status !== 'delivered' && (
-                        <Button
-                          size="sm"
-                          variant="outline"
-                          onClick={() => handleETAUpdate(shipment.id, shipment.originalETA, delayHours)}
-                          className="text-primary border-primary hover:bg-primary/10"
-                        >
-                          <Truck className="h-3 w-3 mr-1" />
-                          Update ETA
-                        </Button>
-                      )}
+                      <div className="flex gap-2">
+                        <Link to={`/track/${shipment.trackingNumber}`}>
+                          <Button
+                            size="sm"
+                            variant="outline"
+                            className="text-primary border-primary hover:bg-primary/10"
+                          >
+                            <Package className="h-3 w-3 mr-1" />
+                            Track
+                          </Button>
+                        </Link>
+                        {weatherAffected && !shipment.adjustedETA && shipment.status !== 'delivered' && (
+                          <Button
+                            size="sm"
+                            variant="outline"
+                            onClick={() => handleETAUpdate(shipment.id, shipment.originalETA, delayHours)}
+                            className="text-primary border-primary hover:bg-primary/10"
+                          >
+                            <Truck className="h-3 w-3 mr-1" />
+                            Update ETA
+                          </Button>
+                        )}
+                      </div>
                     </TableCell>
                   </TableRow>
                 );
