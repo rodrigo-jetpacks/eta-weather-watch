@@ -1,4 +1,3 @@
-
 import React, { useState } from 'react';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
@@ -106,19 +105,19 @@ const Index = () => {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-blue-50 via-white to-slate-50">
+    <div className="min-h-screen bg-background">
       <div className="container mx-auto p-6 space-y-6">
         {/* Header */}
         <div className="text-center mb-8">
           <div className="flex items-center justify-center gap-3 mb-4">
-            <div className="p-3 bg-blue-600 rounded-xl">
-              <CloudRain className="h-8 w-8 text-white" />
+            <div className="p-3 bg-primary rounded-xl">
+              <CloudRain className="h-8 w-8 text-primary-foreground" />
             </div>
-            <h1 className="text-4xl font-bold bg-gradient-to-r from-blue-600 to-blue-800 bg-clip-text text-transparent">
+            <h1 className="text-4xl font-bold text-primary">
               ETA Weather Watch
             </h1>
           </div>
-          <p className="text-lg text-gray-600 max-w-2xl mx-auto">
+          <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
             Streamlined workflow to log weather events and adjust package ETAs for better customer communication
           </p>
         </div>
@@ -132,7 +131,7 @@ const Index = () => {
 
         {/* Main Content Tabs */}
         <Tabs defaultValue="alerts" className="space-y-6">
-          <TabsList className="grid w-full grid-cols-3 bg-white shadow-sm border">
+          <TabsList className="grid w-full grid-cols-3 bg-card shadow-sm border-border">
             <TabsTrigger value="alerts" className="flex items-center gap-2">
               <CloudRain className="h-4 w-4" />
               Weather Alerts
@@ -169,27 +168,27 @@ const Index = () => {
 
         {/* Customer Alert Preview */}
         {weatherEvents.length > 0 && (
-          <Card className="border-l-4 border-l-amber-400 bg-amber-50">
+          <Card className="border-l-4 border-l-destructive bg-destructive/5">
             <CardHeader>
-              <CardTitle className="flex items-center gap-2 text-amber-800">
+              <CardTitle className="flex items-center gap-2 text-destructive">
                 <Truck className="h-5 w-5" />
                 Customer Alert Preview
               </CardTitle>
             </CardHeader>
             <CardContent>
-              <div className="bg-white p-4 rounded-lg border shadow-sm">
+              <div className="bg-card p-4 rounded-lg border border-border shadow-sm">
                 <div className="flex items-start gap-3">
-                  <div className="p-2 bg-amber-100 rounded-lg">
-                    <CloudRain className="h-5 w-5 text-amber-600" />
+                  <div className="p-2 bg-destructive/10 rounded-lg">
+                    <CloudRain className="h-5 w-5 text-destructive" />
                   </div>
                   <div className="flex-1">
-                    <h4 className="font-semibold text-gray-900 mb-1">Weather Delay Notification</h4>
-                    <p className="text-gray-700 text-sm mb-2">
+                    <h4 className="font-semibold text-foreground mb-1">Weather Delay Notification</h4>
+                    <p className="text-muted-foreground text-sm mb-2">
                       Due to severe weather conditions in the delivery area, your package may experience delays.
                     </p>
                     <div className="flex items-center gap-4 text-sm">
                       <Badge variant="outline">Tracking: BTS001234567</Badge>
-                      <span className="text-gray-600">Expected delay: 24 hours</span>
+                      <span className="text-muted-foreground">Expected delay: 24 hours</span>
                     </div>
                   </div>
                 </div>
