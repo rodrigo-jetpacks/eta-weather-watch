@@ -46,7 +46,7 @@ export const mockShipments: BTSShipment[] = [
     id: '4',
     trackingNumber: 'BTS001234570',
     destinationMetroCode: 'DFW',
-    originalETA: '2024-07-17T11:45:00Z',
+    originalETA: '2024-07-11T11:45:00Z',
     status: 'delivered',
     scanTimestamp: '2024-07-10T09:00:00Z',
     customerName: 'Southwest Industries',
