@@ -117,7 +117,6 @@ const WeatherAlertForm: React.FC<WeatherAlertFormProps> = ({ onSubmit }) => {
                 type="date"
                 value={formData.date}
                 onChange={(e) => setFormData({...formData, date: e.target.value})}
-                min={new Date().toISOString().split('T')[0]}
               />
             </div>
           </div>
