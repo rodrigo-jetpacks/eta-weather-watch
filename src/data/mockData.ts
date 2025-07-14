@@ -35,7 +35,7 @@ export const mockShipments: BTSShipment[] = [
     id: '3',
     trackingNumber: 'BTS001234569',
     destinationMetroCode: 'MSP',
-    originalETA: '2024-07-14T16:30:00Z',
+    originalETA: '2024-07-17T16:30:00Z',
     status: 'in_transit',
     scanTimestamp: '2024-07-11T14:20:00Z',
     customerName: 'Northern Supply Co',
@@ -59,7 +59,7 @@ export const mockWeatherAlerts: WeatherAlert[] = [
   {
     id: '1',
     metroCode: 'CHI',
-    date: '2024-07-14',
+    date: '2024-07-15',
     weatherType: 'snowstorm',
     severity: 'high',
     description: 'Heavy snowfall expected with 6-12 inches accumulation',
