@@ -52,6 +52,17 @@ export const mockShipments: BTSShipment[] = [
     customerName: 'Southwest Industries',
     origin: 'Miami, FL',
     destination: 'Dallas, TX'
+  },
+   {
+    id: '5',
+    trackingNumber: 'BTS001234580',
+    destinationMetroCode: 'NYC',
+    originalETA: '2024-07-15T14:00:00Z',
+    status: 'in_transit',
+    scanTimestamp: '2024-07-12T08:30:00Z',
+    customerName: 'Johnson Manufacturing',
+    origin: 'Los Angeles, CA',
+    destination: 'New York, NY'
   }
 ];
 
