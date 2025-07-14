@@ -13,9 +13,9 @@ export const mockShipments: BTSShipment[] = [
     id: '1',
     trackingNumber: 'BTS001234567',
     destinationMetroCode: 'CHI',
-    originalETA: '2024-06-15T14:00:00Z',
+    originalETA: '2024-07-15T14:00:00Z',
     status: 'in_transit',
-    scanTimestamp: '2024-06-12T08:30:00Z',
+    scanTimestamp: '2024-07-12T08:30:00Z',
     customerName: 'Johnson Manufacturing',
     origin: 'Los Angeles, CA',
     destination: 'Chicago, IL'
@@ -24,9 +24,9 @@ export const mockShipments: BTSShipment[] = [
     id: '2',
     trackingNumber: 'BTS001234568',
     destinationMetroCode: 'NYC',
-    originalETA: '2024-06-16T10:00:00Z',
+    originalETA: '2024-07-16T10:00:00Z',
     status: 'in_transit',
-    scanTimestamp: '2024-06-13T12:15:00Z',
+    scanTimestamp: '2024-07-13T12:15:00Z',
     customerName: 'TechCorp Solutions',
     origin: 'Seattle, WA',
     destination: 'New York, NY'
@@ -35,9 +35,9 @@ export const mockShipments: BTSShipment[] = [
     id: '3',
     trackingNumber: 'BTS001234569',
     destinationMetroCode: 'MSP',
-    originalETA: '2024-06-14T16:30:00Z',
+    originalETA: '2024-07-14T16:30:00Z',
     status: 'in_transit',
-    scanTimestamp: '2024-06-11T14:20:00Z',
+    scanTimestamp: '2024-07-11T14:20:00Z',
     customerName: 'Northern Supply Co',
     origin: 'Phoenix, AZ',
     destination: 'Minneapolis, MN'
@@ -46,9 +46,9 @@ export const mockShipments: BTSShipment[] = [
     id: '4',
     trackingNumber: 'BTS001234570',
     destinationMetroCode: 'DFW',
-    originalETA: '2024-06-17T11:45:00Z',
+    originalETA: '2024-07-17T11:45:00Z',
     status: 'delivered',
-    scanTimestamp: '2024-06-10T09:00:00Z',
+    scanTimestamp: '2024-07-10T09:00:00Z',
     customerName: 'Southwest Industries',
     origin: 'Miami, FL',
     destination: 'Dallas, TX'
@@ -59,11 +59,11 @@ export const mockWeatherAlerts: WeatherAlert[] = [
   {
     id: '1',
     metroCode: 'CHI',
-    date: '2024-06-14',
+    date: '2024-07-14',
     weatherType: 'snowstorm',
     severity: 'high',
     description: 'Heavy snowfall expected with 6-12 inches accumulation',
-    createdAt: '2024-06-13T10:00:00Z',
+    createdAt: '2024-07-13T10:00:00Z',
     isActive: true
   }
 ];
@@ -75,7 +75,7 @@ export const mockWeatherEvents: WeatherEvent[] = [
     shipmentId: '1',
     impactLevel: 'moderate',
     delayHours: 24,
-    createdAt: '2024-06-13T10:05:00Z',
+    createdAt: '2024-07-13T10:05:00Z',
     notificationSent: true
   }
 ];
